@@ -187,29 +187,18 @@ arr.push(player);
           tar1.setVelocityX(20);
           vel=20;
         }
-
+        if(tar2.x>801)
+        {
+          tar2.setVelocityX(-20);
+          vel=-20;
+        }
+        if(tar2.x<601)
+        {
+          tar2.setVelocityX(20);
+          vel=20;
+        }
         this.physics.add.overlap(player, tar1, eatCarrot, null, this);
-          var didCollide = this.physics.world.collide(tar1);
-       //  if(didCollide)
-       //  {
-       //    console.log('hi');
-       //    if(dir===0&&vel>0)
-       //    {
-       //      tar1.disableBody(true, true);
-       //      gui.setText('you win');
-       //   targetcount--;
-       //    }
-       //    if(dir===1&&vel<0)
-       //    {
-       //    tar1.disableBody(true, true);
-       //    gui.setText('you win');
-       // targetcount--;
-       //    }
-       //    if(targetcount===0)
-       //    {
-       //      gui.setText('you win');
-       //    }
-       //  }
+        this.physics.add.overlap(player, tar2, eatCarrot1, null, this);
         }
 
 
@@ -224,47 +213,62 @@ arr.push(player);
     }
       function eatCarrot()
     {
-      // if(dir===0&&vel<0&&player.x+500<tar1.x)
-      //     {
-      //       player.disableBody(true,true)
-      //       gui.setText('you lose');
-      //     }
-      //     if(dir===1&&vel>0&&player.x+500<tar1.x)
-      //     {
-      //       player.disableBody(true,true)
-      //       gui.setText('you lose');
-      //     }
-      //   }
       console.log('hi');
          if(dir===0&&vel>0)
          {
            tar1.disableBody(true, true);
-           gui.setText('you win');
         targetcount--;
          }
          if(dir===1&&vel<0)
          {
          tar1.disableBody(true, true);
-         gui.setText('you win');
       targetcount--;
          }
          if(targetcount===0)
          {
            gui.setText('you win');
          }
-
-         //  if(dir===0&&vel>0)
-         //  {
-         //    tar1.disableBody(true, true);
-         // targetcount--;
-         //  }
-         //  if(dir===1&&vel<0)
-         //  {
-         //  tar1.disableBody(true, true);
-         //  targetcount--;
-         //  }
        }
+       function eatCarrot1()
+     {
+       console.log('hi');
+          if(dir===0&&vel>0)
+          {
+            tar2.disableBody(true, true);
+         targetcount--;
+          }
+          if(dir===1&&vel<0)
+          {
+          tar2.disableBody(true, true);
+       targetcount--;
+          }
+          if(targetcount===0)
+          {
+            gui.setText('you win');
+          }
+        }
+       // if(dir===0&&vel<0&&player.x+500<tar1.x)
+       //     {
+       //       player.disableBody(true,true)
+       //       gui.setText('you lose');
+       //     }
+       //     if(dir===1&&vel>0&&player.x+500<tar1.x)
+       //     {
+       //       player.disableBody(true,true)
+       //       gui.setText('you lose');
+       //     }
+       //   }
 
+                //  if(dir===0&&vel>0)
+                //  {
+                //    tar1.disableBody(true, true);
+                // targetcount--;
+                //  }
+                //  if(dir===1&&vel<0)
+                //  {
+                //  tar1.disableBody(true, true);
+                //  targetcount--;
+                //  }
 
 
     </script>
