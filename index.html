@@ -64,38 +64,36 @@
             this.setScale(.04);
             this.setGravityY(0);
             scene.physics.add.collider(platforms);
-var didCollide = scene.physics.world.collide(arr);
+          //  var didCollide = scene.physics.world.collide(arr);
 
-var y1 = x1;
-var y2 = x2;
-            if(didCollide)
-            {
-              if(dir===0&&vel>0)
-              {
-                this.disableBody(true, true);
-             targetcount--;
-              }
-              if(dir===1&&vel<0)
-              {
-              this.disableBody(true, true);
-           targetcount--;
-              }
-            }
-
+            var y1 = x1;
+            var y2 = x2;
+           //  if(didCollide)
+           //  {
+           //    if(dir===0&&vel>0)
+           //    {
+           //      this.disableBody(true, true);
+           //   targetcount--;
+           //    }
+           //    if(dir===1&&vel<0)
+           //    {
+           //    this.disableBody(true, true);
+           // targetcount--;
+           //    }
+           //
           }
-
-}
+      }
 
 
 
     function preload()
     {
-        this.load.image('sky', 'background.png');
-        this.load.image('platform', 'platform.png');
-        this.load.image('player', 'player.png');
-        this.load.image('target', 'target.png');
-        this.load.image('building', 'building.png');
-        this.load.image('police', 'police.png');
+        this.load.image('sky', 'assets/background.png');
+        this.load.image('platform', 'assets/platform.png');
+        this.load.image('player', 'assets/player.png');
+        this.load.image('target', 'assets/target.png');
+  //      this.load.image('building', 'assets/building.png');
+        this.load.image('police', 'assets/police.png');
     }
 
     function create()
@@ -146,20 +144,20 @@ arr.push(player);
         player.setVelocityX(0);
         player.setDragX(1000);
 
-        for(var i = 0; i < arr.length; i++){
-          //timer
-          if(arr[i].x<=arr[i].y1)
-          {
-            arr[i].setVelocityX(50);
-            vel=50;
-            console.log('yes');
-          }
-          if(arr[i].x>=arr[i].y2)
-          {
-            arr[i].setVelocityX(-50);
-            vel=-50;
-          }
-        }
+        // for(var i = 0; i < arr.length; i++){
+        //   //timer
+        //   if(arr[i].x<=arr[i].y1)
+        //   {
+        //     arr[i].setVelocityX(50);
+        //     vel=50;
+        //     console.log('yes');
+        //   }
+        //   if(arr[i].x>=arr[i].y2)
+        //   {
+        //     arr[i].setVelocityX(-50);
+        //     vel=-50;
+        //   }
+        // }
         if (player.body.touching.down)
         {
             player.currentJumps = 0;
@@ -178,34 +176,40 @@ arr.push(player);
         {
           gui.setText('you win');
         }
-        /*
-        if(tar1.x>290)
+
+        if(tar1.x>291)
         {
           tar1.setVelocityX(-20);
           vel=-20;
         }
-        if(tar1.x<210)
+        if(tar1.x<211)
         {
           tar1.setVelocityX(20);
           vel=20;
         }
-        if(didCollide)
-        {
-          if(dir===0&&vel>0)
-          {
-            tar1.disableBody(true, true);
-         targetcount--;
-          }
-          if(dir===1&&vel<0)
-          {
-          tar1.disableBody(true, true);
-       targetcount--;
-          }
-          if(targetcount===0)
-          {
-            gui.setText('you win');
-          }
-          */
+
+        this.physics.add.overlap(player, tar1, eatCarrot, null, this);
+          var didCollide = this.physics.world.collide(tar1);
+       //  if(didCollide)
+       //  {
+       //    console.log('hi');
+       //    if(dir===0&&vel>0)
+       //    {
+       //      tar1.disableBody(true, true);
+       //      gui.setText('you win');
+       //   targetcount--;
+       //    }
+       //    if(dir===1&&vel<0)
+       //    {
+       //    tar1.disableBody(true, true);
+       //    gui.setText('you win');
+       // targetcount--;
+       //    }
+       //    if(targetcount===0)
+       //    {
+       //      gui.setText('you win');
+       //    }
+       //  }
         }
 
 
@@ -220,48 +224,49 @@ arr.push(player);
     }
       function eatCarrot()
     {
-      if(dir===0&&vel<0&&player.x+500<tar1.x)
-          {
-            player.disableBody(true,true)
-            gui.setText('you lose');
-          }
-          if(dir===1&&vel>0&&player.x+500<tar1.x)
-          {
-            player.disableBody(true,true)
-            gui.setText('you lose');
-          }
-        }
+      // if(dir===0&&vel<0&&player.x+500<tar1.x)
+      //     {
+      //       player.disableBody(true,true)
+      //       gui.setText('you lose');
+      //     }
+      //     if(dir===1&&vel>0&&player.x+500<tar1.x)
+      //     {
+      //       player.disableBody(true,true)
+      //       gui.setText('you lose');
+      //     }
+      //   }
+      console.log('hi');
+         if(dir===0&&vel>0)
+         {
+           tar1.disableBody(true, true);
+           gui.setText('you win');
+        targetcount--;
+         }
+         if(dir===1&&vel<0)
+         {
+         tar1.disableBody(true, true);
+         gui.setText('you win');
+      targetcount--;
+         }
+         if(targetcount===0)
+         {
+           gui.setText('you win');
+         }
 
-          /*
-          if(dir===0&&vel>0)
-          {
-            tar1.disableBody(true, true);
-         targetcount--;
-          }
-          if(dir===1&&vel<0)
-          {//i like men
-
-
-          tar1.disableBody(true, true);
-       targetcount--;
-          }
-        }
-      }
-      */
+         //  if(dir===0&&vel>0)
+         //  {
+         //    tar1.disableBody(true, true);
+         // targetcount--;
+         //  }
+         //  if(dir===1&&vel<0)
+         //  {
+         //  tar1.disableBody(true, true);
+         //  targetcount--;
+         //  }
+       }
 
 
 
-
-
-
-
-
-
-
-
-
-
-// Hello people
     </script>
 </body>
 </html>
