@@ -165,11 +165,13 @@ arr.push(player);
         if (cursors.left.isDown || keys.A.isDown)
         {
             player.setVelocityX(-400);
+            player.setFlipX(true);
             dir=1;
         }
         if (cursors.right.isDown || keys.D.isDown)
         {
             player.setVelocityX(400);
+            player.setFlipX(false);
             dir=0;
         }
         if(targetcount===0)
@@ -180,21 +182,25 @@ arr.push(player);
         if(tar1.x>291)
         {
           tar1.setVelocityX(-20);
+          tar1.setFlipX(true);
           vel=-20;
         }
         if(tar1.x<211)
         {
           tar1.setVelocityX(20);
+          tar1.setFlipX(false);
           vel=20;
         }
         if(tar2.x>801)
         {
           tar2.setVelocityX(-20);
+          tar2.setFlipX(true);
           vel=-20;
         }
         if(tar2.x<601)
         {
           tar2.setVelocityX(20);
+          tar2.setFlipX(false);
           vel=20;
         }
         this.physics.add.overlap(player, tar1, eatCarrot, null, this);
