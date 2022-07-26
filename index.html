@@ -199,6 +199,17 @@ arr.push(player);
         }
         this.physics.add.overlap(player, tar1, eatCarrot, null, this);
         this.physics.add.overlap(player, tar2, eatCarrot1, null, this);
+
+        // if(dir===0&&vel<0 &&player.x+500<tar1.x)
+        //     {
+        //       player.disableBody(true,true)
+        //       gui.setText('you lose');
+        //     }
+        //     if(dir===1&&vel>0&&player.x+500<tar1.x)
+        //     {
+        //       player.disableBody(true,true)
+        //       gui.setText('you lose');
+        //     }
         }
 
 
@@ -224,6 +235,16 @@ arr.push(player);
          tar1.disableBody(true, true);
       targetcount--;
          }
+         if(dir===0 &&vel<0)
+         {
+           player.disableBody(true,true);
+           gui.setText('you lose');
+         }
+         if (dir===1 && vel>0)
+         {
+           player.disableBody(true, true);
+           gui.setText('you lose');
+         }
          if(targetcount===0)
          {
            gui.setText('you win');
@@ -246,18 +267,18 @@ arr.push(player);
           {
             gui.setText('you win');
           }
+          if(dir===0 &&vel<0)
+          {
+            player.disableBody(true,true);
+            gui.setText('you lose');
+          }
+          if (dir===1 && vel>0)
+          {
+            player.disableBody(true, true);
+            gui.setText('you lose');
+          }
         }
-       // if(dir===0&&vel<0&&player.x+500<tar1.x)
-       //     {
-       //       player.disableBody(true,true)
-       //       gui.setText('you lose');
-       //     }
-       //     if(dir===1&&vel>0&&player.x+500<tar1.x)
-       //     {
-       //       player.disableBody(true,true)
-       //       gui.setText('you lose');
-       //     }
-       //   }
+
 
                 //  if(dir===0&&vel>0)
                 //  {
