@@ -211,9 +211,9 @@ arr.push(player);
 
        if(tar1.x>291)
        {
-         tar1.setVelocityX(-50);
+         tar1.setVelocityX(-100);
          tar1.setFlipX(true);
-         vel=-50;
+         vel=-100;
          tar1.play(tar1.animations['redTargetWalkAnim'], true);
 
     //     tar1.play(tar1.animations['policeWalkAnim'], true);
@@ -221,9 +221,9 @@ arr.push(player);
        }
        if(tar1.x<211)
        {
-         tar1.setVelocityX(50);
+         tar1.setVelocityX(100);
          tar1.setFlipX(false);
-         vel=50;
+         vel=100;
          tar1.play(tar1.animations['redTargetWalkAnim'], true);
 
 
@@ -231,17 +231,17 @@ arr.push(player);
        }
        if(tar2.x>801)
        {
-         tar2.setVelocityX(-50);
+         tar2.setVelocityX(-100);
          tar2.setFlipX(true);
-         vel=-50;
+         vel=-100;
          tar2.play(tar2.animations['greenTargetWalkAnim'], true);
     //   tar2.play(tar2.animations['greenTargetWalkAnim'], true);
        }
        if(tar2.x<601)
        {
-         tar2.setVelocityX(50);
+         tar2.setVelocityX(100);
          tar2.setFlipX(false);
-         vel=50;
+         vel=100;
          tar2.play(tar2.animations['greenTargetWalkAnim'], true);
          //tar2.play(tar2.animations['greenTargetWalkAnim'], true);
        }
@@ -260,10 +260,9 @@ arr.push(player);
        //     }
        if (player.y>565.5)
        {
-         player.disableBody(true, true);
-         let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-220,'LLL');
-          let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-190,'PA');
-
+        player.disableBody(true, true);
+        let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-230,'LLL');
+        let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-215,'PA');
        }
        }
 
@@ -281,16 +280,14 @@ arr.push(player);
  {
    if (dir===0 && player.x>tar1.x && vel>0)
    {
-     gui.setText('ur ass kid');
    }
-      else if(dir===0&&vel>0)
+    else if(dir===0&&vel>0)
       {
         tar1.disableBody(true, true);
-     targetcount--;
+        targetcount--;
       }
       if (dir===1 && player.x<tar1.x && vel<0)
       {
-        gui.setText('ur ass kid');
       }
        else if(dir===1&&vel<0)
       {
@@ -300,21 +297,17 @@ arr.push(player);
       if(dir===0 &&vel<0)
       {
         player.disableBody(true,true);
-        let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-220,'LLL');
-        let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-190,'PA');
+        let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-230,'LLL');
+        let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-215,'PA');
+
       }
       if (dir===1 && vel>0)
       {
         player.disableBody(true, true);
-        let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-220,'LLL');
-        let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-190,'PA');
-      }
+        let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-230,'LLL');
+        let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-215,'PA');
 
-      if(targetcount===0)
-      {
-        gui.setText('you win');
       }
-
     }
     function eatCarrot1()
   {
@@ -336,21 +329,18 @@ arr.push(player);
        tar2.disableBody(true, true);
     targetcount--;
        }
-       if(targetcount===0)
-       {
-         gui.setText('you win');
-       }
        if(dir===0 &&vel<0)
        {
          player.disableBody(true,true);
-         let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-220,'LLL');
-         let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-190,'PA');
+         let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-230,'LLL');
+         let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-215,'PA');
+
        }
        if (dir===1 && vel>0)
        {
          player.disableBody(true, true);
-         let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-220,'LLL');
-         let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-190,'PA');
+         let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-230,'LLL');
+         let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-215,'PA');
        }
      }
 
