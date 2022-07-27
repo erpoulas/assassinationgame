@@ -40,24 +40,26 @@
     {
         totalJumps = 2;
         currentJumps = 0;
-        constructor(scene, x, y)
+        constructor(scene, x, y, spritesheet, character, animations)
         {
-            super(scene, x, y, 'player');
+            super(scene, x, y, spritesheet, character);
+            this.animations = animations;
             scene.add.existing(this);
             scene.physics.add.existing(this);
             this.setScale(.04);
             this.setCollideWorldBounds(false);
-            this.setGravityY(3000); //We will set gravity *per object* rather than for the scene!
+            this.setGravityY(4000); //We will set gravity *per object* rather than for the scene!
         }
     }
 
     class Targets extends Phaser.Physics.Arcade.Sprite
     {
 
-        constructor(scene, x, y, x1, x2)
+        constructor(scene, x, y, x1, x2, spritesheet, character, animations)
         {
 
-            super(scene, x, y, 'target', x1, x2 );
+            super(scene, x, y, x1, x2, spritesheet, character);
+            this.animations = animations;
             scene.add.existing(this);
             scene.physics.add.existing(this);
             this.setCollideWorldBounds(false);
@@ -90,238 +92,275 @@
     {
         this.load.image('sky', 'assets/background.png');
         this.load.image('platform', 'assets/platform.png');
-        this.load.image('player', 'assets/player.png');
-        this.load.image('target', 'assets/target.png');
-  //      this.load.image('building', 'assets/building.png');
-        this.load.image('police', 'assets/police.png');
+        this.load.atlas('characters', 'assets/texture.png' , 'assets/texture.json');
         this.load.image('LLL', 'assets/loser.png');
+        this.load.image('WWW', 'assets/winner.png');
     }
 
-    function create()
-    {
-       let background = this.add.image(963, 303,'sky');
-       background.setScale(1);
+      function create()
+      {
+        let background = this.add.image(963, 303,'sky');
+        background.setScale(1);
 
-       createPlatforms(this);
-       player = new Player(this, 50, 400);
-       this.physics.add.collider(player, platforms);
+      let playerAnims = [];
+      let playerWalkAnim = this.anims.create({key: 'player' , frames: this.anims.generateFrameNames ('characters' , {prefix: 'playerWalkRight' ,start: 0,  end: 3 , zeroPad: 2}), repeat: -1});
+      playerAnims['playerWalkAnim'] = playerWalkAnim;
 
-       tar1 = new Targets(this, 210,465, 210, 290);
+      let policeAnims = [];
+      let policeWalkAnim = this.anims.create({key: 'police' , frames: this.anims.generateFrameNames ('characters' , {prefix: 'policeOfficerWalk' , start: 0, end: 3 , zeroPad: 2}), repeat: -1, frameRate: 9});
+      policeAnims['policeWalkAnim'] = policeWalkAnim;
+
+      // this.anims.create({key: 'greenCivilian' , frames: this.anims.generateFrameNames ('texture' , {prefix: 'greenCivilianWalkRight' ,start: 0,  end: 3 , zeroPad: 2}), repeat: -1});
+      let redTargetAnims = [];
+      let redTargetWalkAnim = this.anims.create({key: 'target1' , frames: this.anims.generateFrameNames ('characters' , {prefix: 'redCivilianWalkRight' , start: 0, end: 3 , zeroPad: 2}), repeat: -1, frameRate: 9});
+      redTargetAnims['redTargetWalkAnim'] = redTargetWalkAnim;
+
+      let greenTargetAnims = [];
+      let greenTargetWalkAnim = this.anims.create({key: 'target2' , frames: this.anims.generateFrameNames ('characters' , {prefix: 'greenCivilianWalkRight' ,start: 0,  end: 3 , zeroPad: 2}), repeat: -1, frameRate: 9});
+      greenTargetAnims['greenTargetWalkAnim'] = greenTargetWalkAnim;
 
 
-       tar2 = new Targets(this, 600,530, 600, 800);
+      createPlatforms(this);
+      player = new Player(this, 50, 400, 'characters', 'player', playerAnims);
+      this.physics.add.collider(player, platforms);
+      player.setScale(1.3);
 
-       arr.push(tar2);
 
-       this.physics.add.overlap(player, targets, eatCarrot, null, this);
 
-       cursors = this.input.keyboard.createCursorKeys();
-       keys = this.input.keyboard.addKeys('A, D');
-       space = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-       space.on('down', jump); //calls jump function when space is pressed
+      tar1 = new Targets(this, 210,465, 210, 290, 'characters', 'target1' , redTargetAnims); //*******
+      tar1.setScale(1.3);
 
-       gui = this.add.text(16, 16, '', {fontSize: '32px', fill: '#000'});
+
+      tar2 = new Targets(this, 600,530, 600, 800 , 'characters', 'target2' , greenTargetAnims);
+      tar2.setScale(1.3);
+
+      arr.push(tar2);
+
+      this.physics.add.overlap(player, targets, eatCarrot, null, this);
+
+      cursors = this.input.keyboard.createCursorKeys();
+      keys = this.input.keyboard.addKeys('A, D');
+      space = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+      space.on('down', jump); //calls jump function when space is pressed
+
+      gui = this.add.text(16, 16, '', {fontSize: '32px', fill: '#000'});
 
 arr.push(tar1);
 arr.push(player);
 
-    }
+   }
 
-    function createPlatforms(scene)
-    {
-    platforms = scene.physics.add.staticGroup();
+   function createPlatforms(scene)
+   {
+   platforms = scene.physics.add.staticGroup();
 
-    let basePlatform = platforms.create(200, 600, 'platform');
-    basePlatform.setScale(3, 1).refreshBody();
+   let basePlatform = platforms.create(200, 600, 'platform');
+   basePlatform.setScale(3, 1).refreshBody();
 
-    let building1=  platforms.create(250,300,'platform');
-    building1.setScale(.19, 3).refreshBody();
-    let buildingbot1=  platforms.create(250,600,'platform');
-    buildingbot1.setScale(.19, 3).refreshBody();
-    }
+   let building1=  platforms.create(250,300,'platform');
+   building1.setScale(.19, 3).refreshBody();
+   let buildingbot1=  platforms.create(250,600,'platform');
+   buildingbot1.setScale(.19, 3).refreshBody();
+   }
 
-    function update()
-    {
-        player.setVelocityX(0);
-        player.setDragX(1000);
+   function update()
+   {
+       player.setVelocityX(0);
+       player.setDragX(1000);
 
-        // for(var i = 0; i < arr.length; i++){
-        //   //timer
-        //   if(arr[i].x<=arr[i].y1)
-        //   {
-        //     arr[i].setVelocityX(50);
-        //     vel=50;
-        //     console.log('yes');
-        //   }
-        //   if(arr[i].x>=arr[i].y2)
-        //   {
-        //     arr[i].setVelocityX(-50);
-        //     vel=-50;
-        //   }
-        // }
-        if (player.body.touching.down)
-        {
-            player.currentJumps = 0;
-        }
-        if (cursors.left.isDown || keys.A.isDown)
-        {
-            player.setVelocityX(-400);
-            player.setFlipX(true);
-            dir=1;
-        }
-        if (cursors.right.isDown || keys.D.isDown)
-        {
-            player.setVelocityX(400);
-            player.setFlipX(false);
-            dir=0;
-        }
-        if(targetcount===0)
-        {
-          gui.setText('you win');
-        }
+       // for(var i = 0; i < arr.length; i++){
+       //   //timer
+       //   if(arr[i].x<=arr[i].y1)
+       //   {
+       //     arr[i].setVelocityX(50);
+       //     vel=50;
+       //     console.log('yes');
+       //   }
+       //   if(arr[i].x>=arr[i].y2)
+       //   {
+       //     arr[i].setVelocityX(-50);
+       //     vel=-50;
+       //   }
+       // }
+       if (player.body.touching.down)
+       {
+           player.currentJumps = 0;
+       }
+       if (cursors.left.isDown || keys.A.isDown)
+       {
+           player.setVelocityX(-400);
+           player.setFlipX(true);
+           dir=1;
+           player.play(player.animations['playerWalkAnim'], true);
+       } else if (cursors.right.isDown || keys.D.isDown)
+       {
+           player.setVelocityX(400);
+           player.setFlipX(false);
+           dir=0;
+           player.play(player.animations['playerWalkAnim'], true);
+       } else {
+         player.play(player.animations['playerWalkAnim'], false);
 
-        if(tar1.x>291)
-        {
-          tar1.setVelocityX(-20);
-          tar1.setFlipX(true);
-          vel=-20;
-        }
-        if(tar1.x<211)
-        {
-          tar1.setVelocityX(20);
-          tar1.setFlipX(false);
-          vel=20;
-        }
-        if(tar2.x>801)
-        {
-          tar2.setVelocityX(-20);
-          tar2.setFlipX(true);
-          vel=-20;
-        }
-        if(tar2.x<601)
-        {
-          tar2.setVelocityX(20);
-          tar2.setFlipX(false);
-          vel=20;
-        }
-        this.physics.add.overlap(player, tar1, eatCarrot, null, this);
-        this.physics.add.overlap(player, tar2, eatCarrot1, null, this);
+       }
+       if(targetcount===0)
+       {
+         player.disableBody(true, true);
+         let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-175,'WWW');
+       }
 
-        // if(dir===0&&vel<0 &&player.x+500<tar1.x)
-        //     {
-        //       player.disableBody(true,true)
-        //       gui.setText('you lose');
-        //     }
-        //     if(dir===1&&vel>0&&player.x+500<tar1.x)
-        //     {
-        //       player.disableBody(true,true)
-        //       gui.setText('you lose');
-        //     }
+       if(tar1.x>291)
+       {
+         tar1.setVelocityX(-20);
+         tar1.setFlipX(true);
+         vel=-20;
+         tar1.play(tar1.animations['redTargetWalkAnim'], true);
 
-        if (player.y>565.5)
-        {
-          player.disableBody(true, true);
-          let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-175,'LLL');
+    //     tar1.play(tar1.animations['policeWalkAnim'], true);
 
-        }
-        }
+       }
+       if(tar1.x<211)
+       {
+         tar1.setVelocityX(20);
+         tar1.setFlipX(false);
+         vel=20;
+         tar1.play(tar1.animations['redTargetWalkAnim'], true);
 
 
+    //     tar1.play(tar1.animations['policeWalkAnim'], true);
+       }
+       if(tar2.x>801)
+       {
+         tar2.setVelocityX(-20);
+         tar2.setFlipX(true);
+         vel=-20;
+         tar2.play(tar2.animations['greenTargetWalkAnim'], true);
+    //   tar2.play(tar2.animations['greenTargetWalkAnim'], true);
+       }
+       if(tar2.x<601)
+       {
+         tar2.setVelocityX(20);
+         tar2.setFlipX(false);
+         vel=20;
+         tar2.play(tar2.animations['greenTargetWalkAnim'], true);
+         //tar2.play(tar2.animations['greenTargetWalkAnim'], true);
+       }
+       this.physics.add.overlap(player, tar1, eatCarrot, null, this);
+       this.physics.add.overlap(player, tar2, eatCarrot1, null, this);
+
+       // if(dir===0&&vel<0 &&player.x+500<tar1.x)
+       //     {
+       //       player.disableBody(true,true)
+       //       gui.setText('you lose');
+       //     }
+       //     if(dir===1&&vel>0&&player.x+500<tar1.x)
+       //     {
+       //       player.disableBody(true,true)
+       //       gui.setText('you lose');
+       //     }
+       if (player.y>565.5)
+       {
+         player.disableBody(true, true);
+         let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-175,'LLL');
+
+       }
+       }
 
 
-    function jump(event)
-    {
-        if (player.body.touching.down) {
-          player.setVelocityY(-1100);
-          player.currentJumps++;
-    }
-    }
-      function eatCarrot()
-    {
-      if (dir===0 && player.x>tar1.x && vel>0)
+
+
+   function jump(event)
+   {
+       if (player.body.touching.down) {
+         player.setVelocityY(-1100);
+         player.currentJumps++;
+   }
+   }
+   function eatCarrot()
+ {
+   if (dir===0 && player.x>tar1.x && vel>0)
+   {
+     gui.setText('ur ass kid');
+   }
+      else if(dir===0&&vel>0)
+      {
+        tar1.disableBody(true, true);
+     targetcount--;
+      }
+      if (dir===1 && player.x<tar1.x && vel<0)
       {
         gui.setText('ur ass kid');
       }
-         else if(dir===0&&vel>0)
-         {
-           tar1.disableBody(true, true);
-        targetcount--;
-         }
-         if (dir===1 && player.x<tar1.x && vel<0)
-         {
-           gui.setText('ur ass kid');
-         }
-          else if(dir===1&&vel<0)
-         {
-         tar1.disableBody(true, true);
+       else if(dir===1&&vel<0)
+      {
+      tar1.disableBody(true, true);
+   targetcount--;
+      }
+      if(dir===0 &&vel<0)
+      {
+        player.disableBody(true,true);
+        let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-175,'LLL');
+      }
+      if (dir===1 && vel>0)
+      {
+        player.disableBody(true, true);
+        let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-175,'LLL');
+      }
+
+      if(targetcount===0)
+      {
+        gui.setText('you win');
+      }
+
+    }
+    function eatCarrot1()
+  {
+    if (dir===0 && player.x>tar2.x && vel>0)
+    {
+      gui.setText('ur ass kid');
+    }
+     else if(dir===0&&vel>0)
+       {
+         tar2.disableBody(true, true);
       targetcount--;
-         }
-         if(dir===0 &&vel<0)
-         {
-           player.disableBody(true,true);
-           gui.setText('you lose');
-         }
-         if (dir===1 && vel>0)
-         {
-           player.disableBody(true, true);
-           gui.setText('you lose');
-         }
-
-         if(targetcount===0)
-         {
-           gui.setText('you win');
-         }
-
        }
-       function eatCarrot1()
-     {
-       if (dir===0 && player.x>tar2.x && vel>0)
+       if (dir===1 && player.x<tar2.x && vel<0)
        {
          gui.setText('ur ass kid');
        }
-        else if(dir===0&&vel>0)
-          {
-            tar2.disableBody(true, true);
-         targetcount--;
-          }
-          if (dir===1 && player.x<tar2.x && vel<0)
-          {
-            gui.setText('ur ass kid');
-          }
-           else if(dir===1&&vel<0)
-          {
-          tar2.disableBody(true, true);
-       targetcount--;
-          }
-          if(targetcount===0)
-          {
-            gui.setText('you win');
-          }
-          if(dir===0 &&vel<0)
-          {
-            player.disableBody(true,true);
-            gui.setText('you lose');
-          }
-          if (dir===1 && vel>0)
-          {
-            player.disableBody(true, true);
-            gui.setText('you lose');
-          }
-        }
+        else if(dir===1&&vel<0)
+       {
+       tar2.disableBody(true, true);
+    targetcount--;
+       }
+       if(targetcount===0)
+       {
+         gui.setText('you win');
+       }
+       if(dir===0 &&vel<0)
+       {
+         player.disableBody(true,true);
+         let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-175,'LLL');
+       }
+       if (dir===1 && vel>0)
+       {
+         player.disableBody(true, true);
+         let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-175,'LLL');
+       }
+     }
 
 
-                //  if(dir===0&&vel>0)
-                //  {
-                //    tar1.disableBody(true, true);
-                // targetcount--;
-                //  }
-                //  if(dir===1&&vel<0)
-                //  {
-                //  tar1.disableBody(true, true);
-                //  targetcount--;
-                //  }
+             //  if(dir===0&&vel>0)
+             //  {
+             //    tar1.disableBody(true, true);
+             // targetcount--;
+             //  }
+             //  if(dir===1&&vel<0)
+             //  {
+             //  tar1.disableBody(true, true);
+             //  targetcount--;
+             //  }
 
 
-    </script>
+ </script>
 </body>
 </html>
