@@ -46,7 +46,7 @@
             scene.add.existing(this);
             scene.physics.add.existing(this);
             this.setScale(.04);
-            this.setCollideWorldBounds(true);
+            this.setCollideWorldBounds(false);
             this.setGravityY(3000); //We will set gravity *per object* rather than for the scene!
         }
     }
@@ -236,12 +236,20 @@ arr.push(player);
     }
       function eatCarrot()
     {
-         if(dir===0&&vel>0)
+      if (dir===0 && player.x>tar1.x && vel>0)
+      {
+        gui.setText('ur ass kid');
+      }
+         else if(dir===0&&vel>0)
          {
            tar1.disableBody(true, true);
         targetcount--;
          }
-         if(dir===1&&vel<0)
+         if (dir===1 && player.x<tar1.x && vel<0)
+         {
+           gui.setText('ur ass kid');
+         }
+          else if(dir===1&&vel<0)
          {
          tar1.disableBody(true, true);
       targetcount--;
@@ -256,19 +264,29 @@ arr.push(player);
            player.disableBody(true, true);
            gui.setText('you lose');
          }
+
          if(targetcount===0)
          {
            gui.setText('you win');
          }
+
        }
        function eatCarrot1()
      {
-          if(dir===0&&vel>0)
+       if (dir===0 && player.x>tar2.x && vel>0)
+       {
+         gui.setText('ur ass kid');
+       }
+        else if(dir===0&&vel>0)
           {
             tar2.disableBody(true, true);
          targetcount--;
           }
-          if(dir===1&&vel<0)
+          if (dir===1 && player.x<tar2.x && vel<0)
+          {
+            gui.setText('ur ass kid');
+          }
+           else if(dir===1&&vel<0)
           {
           tar2.disableBody(true, true);
        targetcount--;
