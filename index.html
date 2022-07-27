@@ -94,12 +94,13 @@
         this.load.image('target', 'assets/target.png');
   //      this.load.image('building', 'assets/building.png');
         this.load.image('police', 'assets/police.png');
+        this.load.image('LLL', 'assets/loser.png');
     }
 
     function create()
     {
        let background = this.add.image(963, 303,'sky');
-       background.setScale(3);
+       background.setScale(1);
 
        createPlatforms(this);
        player = new Player(this, 50, 400);
@@ -220,7 +221,8 @@ arr.push(player);
         if (player.y>565.5)
         {
           player.disableBody(true, true);
-          gui.setText('congrats dumbass');
+          let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-175,'LLL');
+
         }
         }
 
