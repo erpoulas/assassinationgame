@@ -95,6 +95,7 @@
         this.load.atlas('characters', 'assets/texture.png' , 'assets/texture.json');
         this.load.image('LLL', 'assets/loser.png');
         this.load.image('WWW', 'assets/winner.png');
+        this.load.image('PA', 'assets/playagain.png');
     }
 
       function create()
@@ -210,9 +211,9 @@ arr.push(player);
 
        if(tar1.x>291)
        {
-         tar1.setVelocityX(-20);
+         tar1.setVelocityX(-50);
          tar1.setFlipX(true);
-         vel=-20;
+         vel=-50;
          tar1.play(tar1.animations['redTargetWalkAnim'], true);
 
     //     tar1.play(tar1.animations['policeWalkAnim'], true);
@@ -220,9 +221,9 @@ arr.push(player);
        }
        if(tar1.x<211)
        {
-         tar1.setVelocityX(20);
+         tar1.setVelocityX(50);
          tar1.setFlipX(false);
-         vel=20;
+         vel=50;
          tar1.play(tar1.animations['redTargetWalkAnim'], true);
 
 
@@ -230,17 +231,17 @@ arr.push(player);
        }
        if(tar2.x>801)
        {
-         tar2.setVelocityX(-20);
+         tar2.setVelocityX(-50);
          tar2.setFlipX(true);
-         vel=-20;
+         vel=-50;
          tar2.play(tar2.animations['greenTargetWalkAnim'], true);
     //   tar2.play(tar2.animations['greenTargetWalkAnim'], true);
        }
        if(tar2.x<601)
        {
-         tar2.setVelocityX(20);
+         tar2.setVelocityX(50);
          tar2.setFlipX(false);
-         vel=20;
+         vel=50;
          tar2.play(tar2.animations['greenTargetWalkAnim'], true);
          //tar2.play(tar2.animations['greenTargetWalkAnim'], true);
        }
@@ -260,7 +261,8 @@ arr.push(player);
        if (player.y>565.5)
        {
          player.disableBody(true, true);
-         let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-175,'LLL');
+         let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-220,'LLL');
+          let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-190,'PA');
 
        }
        }
@@ -298,12 +300,14 @@ arr.push(player);
       if(dir===0 &&vel<0)
       {
         player.disableBody(true,true);
-        let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-175,'LLL');
+        let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-220,'LLL');
+        let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-190,'PA');
       }
       if (dir===1 && vel>0)
       {
         player.disableBody(true, true);
-        let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-175,'LLL');
+        let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-220,'LLL');
+        let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-190,'PA');
       }
 
       if(targetcount===0)
@@ -339,12 +343,14 @@ arr.push(player);
        if(dir===0 &&vel<0)
        {
          player.disableBody(true,true);
-         let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-175,'LLL');
+         let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-220,'LLL');
+         let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-190,'PA');
        }
        if (dir===1 && vel>0)
        {
          player.disableBody(true, true);
-         let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-175,'LLL');
+         let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-220,'LLL');
+         let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-190,'PA');
        }
      }
 
