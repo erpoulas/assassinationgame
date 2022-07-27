@@ -98,8 +98,8 @@
 
     function create()
     {
-       let background = this.add.tileSprite(0, 0, game.scale.width, game.scale.height, 'sky').setOrigin(0, 0);
-
+       let background = this.add.image(963, 303,'sky');
+       background.setScale(3);
 
        createPlatforms(this);
        player = new Player(this, 50, 400);
@@ -216,6 +216,12 @@ arr.push(player);
         //       player.disableBody(true,true)
         //       gui.setText('you lose');
         //     }
+
+        if (player.y>565.5)
+        {
+          player.disableBody(true, true);
+          gui.setText('congrats dumbass');
+        }
         }
 
 
@@ -230,7 +236,6 @@ arr.push(player);
     }
       function eatCarrot()
     {
-      console.log('hi');
          if(dir===0&&vel>0)
          {
            tar1.disableBody(true, true);
@@ -258,7 +263,6 @@ arr.push(player);
        }
        function eatCarrot1()
      {
-       console.log('hi');
           if(dir===0&&vel>0)
           {
             tar2.disableBody(true, true);
