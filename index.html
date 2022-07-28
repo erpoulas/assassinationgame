@@ -211,6 +211,7 @@ arr.push(player);
        {
          player.disableBody(true, true);
          let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-175,'WWW');
+       document.getElementById('next_level_btn').style.display = "block";
        }
 
        if(tar1.x>291)
@@ -288,6 +289,7 @@ arr.push(player);
         player.disableBody(true, true);
         let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-230,'LLL');
         let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-215,'PA');
+        document.getElementById('restart_game_btn').style.display = "block";
        }
        }
 
@@ -337,7 +339,6 @@ arr.push(player);
   {
     if (dir===0 && player.x>tar2.x && vel1>0)
     {
-      gui.setText('ur ass kid');
     }
      else if(dir===0&&vel1>0)
        {
@@ -346,7 +347,6 @@ arr.push(player);
        }
        if (dir===1 && player.x<tar2.x && vel1<0)
        {
-         gui.setText('ur ass kid');
        }
         else if(dir===1&&vel1<0)
        {
@@ -391,7 +391,7 @@ arr.push(player);
           player.disableBody(true, true);
           let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-230,'LLL');
           let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-215,'PA');
-          document.getElementById('restart_game_btn').style.display = "block";
+
         }
         if (dir===1 && vel2>0)
         {
@@ -404,6 +404,10 @@ arr.push(player);
 
       function i_die() {
         window.location.reload();
+      }
+      function newlevel()
+      {
+        platforms.clear(true);
       }
              //  if(dir===0&&vel>0)
              //  {
@@ -420,6 +424,7 @@ arr.push(player);
  </script>
 
  <button id = "restart_game_btn" onclick = "i_die()" style="position: absolute; left: 40%; top: 70%; font-size: 4vw; display: none">RESTART!</button>
+ <button id = "next_level_btn" onclick = "newlevel()" style="position: absolute; left: 40%; top: 70%; font-size: 4vw; display: none">NEXT LEVEL!</button>
 
 </body>
 </html>
