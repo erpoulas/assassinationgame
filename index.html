@@ -26,8 +26,10 @@
     var tar1;
     var tar2;
     var targets = [];
-    var targetcount = 2;
-    var vel=20;
+    var targetcount = 3;
+    var vel=100;
+    var vel1 = 100;
+    var vel2=100;
     var cursors;
     var keys;
     var space;
@@ -135,6 +137,8 @@
       tar2 = new Targets(this, 600,530, 600, 800 , 'characters', 'target2' , greenTargetAnims);
       tar2.setScale(1.3);
 
+      tar3 = new Targets(this, 1000,530, 1000, 1300, 'characters', 'target3' , redTargetAnims); //*******
+      tar3.setScale(1.3);
       arr.push(tar2);
 
       this.physics.add.overlap(player, targets, eatCarrot, null, this);
@@ -156,7 +160,7 @@ arr.push(player);
    platforms = scene.physics.add.staticGroup();
 
    let basePlatform = platforms.create(200, 600, 'platform');
-   basePlatform.setScale(3, 1).refreshBody();
+   basePlatform.setScale(6.5, 1).refreshBody();
 
    let building1=  platforms.create(250,300,'platform');
    building1.setScale(.19, 3).refreshBody();
@@ -233,7 +237,7 @@ arr.push(player);
        {
          tar2.setVelocityX(-100);
          tar2.setFlipX(true);
-         vel=-100;
+         vel1=-100;
          tar2.play(tar2.animations['greenTargetWalkAnim'], true);
     //   tar2.play(tar2.animations['greenTargetWalkAnim'], true);
        }
@@ -241,12 +245,33 @@ arr.push(player);
        {
          tar2.setVelocityX(100);
          tar2.setFlipX(false);
-         vel=100;
+         vel1=100;
          tar2.play(tar2.animations['greenTargetWalkAnim'], true);
          //tar2.play(tar2.animations['greenTargetWalkAnim'], true);
        }
+       if(tar3.x>1301)
+       {
+         tar3.setVelocityX(-100);
+         tar3.setFlipX(true);
+         vel2=-100;
+         tar3.play(tar1.animations['redTargetWalkAnim'], true);
+
+    //     tar1.play(tar1.animations['policeWalkAnim'], true);
+
+       }
+       if(tar3.x<1001)
+       {
+         tar3.setVelocityX(100);
+         tar3.setFlipX(false);
+         vel2=100;
+         tar3.play(tar1.animations['redTargetWalkAnim'], true);
+
+
+    //     tar1.play(tar1.animations['policeWalkAnim'], true);
+       }
        this.physics.add.overlap(player, tar1, eatCarrot, null, this);
        this.physics.add.overlap(player, tar2, eatCarrot1, null, this);
+       this.physics.add.overlap(player, tar3, eatCarrot2, null, this);
 
        // if(dir===0&&vel<0 &&player.x+500<tar1.x)
        //     {
@@ -265,7 +290,6 @@ arr.push(player);
         let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-215,'PA');
        }
        }
-
 
 
 
@@ -296,55 +320,91 @@ arr.push(player);
       }
       if(dir===0 &&vel<0)
       {
-        player.disableBody(true,true);
+        player.disableBody(true, true);
         let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-230,'LLL');
         let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-215,'PA');
-
+        document.getElementById('restart_game_btn').style.display = "block";
       }
       if (dir===1 && vel>0)
       {
         player.disableBody(true, true);
         let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-230,'LLL');
         let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-215,'PA');
-
+        document.getElementById('restart_game_btn').style.display = "block";
       }
     }
     function eatCarrot1()
   {
-    if (dir===0 && player.x>tar2.x && vel>0)
+    if (dir===0 && player.x>tar2.x && vel1>0)
     {
       gui.setText('ur ass kid');
     }
-     else if(dir===0&&vel>0)
+     else if(dir===0&&vel1>0)
        {
          tar2.disableBody(true, true);
       targetcount--;
        }
-       if (dir===1 && player.x<tar2.x && vel<0)
+       if (dir===1 && player.x<tar2.x && vel1<0)
        {
          gui.setText('ur ass kid');
        }
-        else if(dir===1&&vel<0)
+        else if(dir===1&&vel1<0)
        {
        tar2.disableBody(true, true);
     targetcount--;
        }
-       if(dir===0 &&vel<0)
-       {
-         player.disableBody(true,true);
-         let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-230,'LLL');
-         let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-215,'PA');
-
-       }
-       if (dir===1 && vel>0)
+       if(dir===0 &&vel1<0)
        {
          player.disableBody(true, true);
          let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-230,'LLL');
          let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-215,'PA');
+         document.getElementById('restart_game_btn').style.display = "block";
+       }
+       if (dir===1 && vel1>0)
+       {
+         player.disableBody(true, true);
+         let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-230,'LLL');
+         let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-215,'PA');
+         document.getElementById('restart_game_btn').style.display = "block";
        }
      }
+     function eatCarrot2()
+   {
+     if (dir===0 && player.x>tar3.x && vel2>0)
+     {
+     }
+      else if(dir===0&&vel2>0)
+        {
+          tar3.disableBody(true, true);
+          targetcount--;
+        }
+        if (dir===1 && player.x<tar3.x && vel2<0)
+        {
+        }
+         else if(dir===1&&vel2<0)
+        {
+        tar3.disableBody(true, true);
+     targetcount--;
+        }
+        if(dir===0 &&vel2<0)
+        {
+          player.disableBody(true, true);
+          let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-230,'LLL');
+          let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-215,'PA');
+          document.getElementById('restart_game_btn').style.display = "block";
+        }
+        if (dir===1 && vel2>0)
+        {
+          player.disableBody(true, true);
+          let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-230,'LLL');
+          let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-215,'PA');
+          document.getElementById('restart_game_btn').style.display = "block";
+        }
+      }
 
-
+      function i_die() {
+        window.location.reload();
+      }
              //  if(dir===0&&vel>0)
              //  {
              //    tar1.disableBody(true, true);
@@ -358,5 +418,8 @@ arr.push(player);
 
 
  </script>
+
+ <button id = "restart_game_btn" onclick = "i_die()" style="position: absolute; left: 40%; top: 70%; font-size: 4vw; display: none">RESTART!</button>
+
 </body>
 </html>
