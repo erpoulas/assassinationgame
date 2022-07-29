@@ -26,7 +26,7 @@
     var tar1;
     var tar2;
     var targets = [];
-    var targetcount = 3;
+    var targetcount = 5;
     var vel=100;
     var vel1 = 100;
     var vel2=100;
@@ -37,6 +37,7 @@
     var guiTimer;
     var dir;
     var arr=[];
+    var platforms = [];
 
     class Player extends Phaser.Physics.Arcade.Sprite
     {
@@ -94,6 +95,7 @@
     {
         this.load.image('sky', 'assets/background.png');
         this.load.image('platform', 'assets/platform.png');
+        this.load.image('level1', 'assets/level1.png');
         this.load.atlas('characters', 'assets/texture.png' , 'assets/texture.json');
         this.load.image('LLL', 'assets/loser.png');
         this.load.image('WWW', 'assets/winner.png');
@@ -103,7 +105,11 @@
       function create()
       {
         let background = this.add.image(963, 303,'sky');
-        background.setScale(1);
+        background.setScale(3);
+
+        let level1 = this.add.image(963, 303, 'level1');
+
+
 
       let playerAnims = [];
       let playerWalkAnim = this.anims.create({key: 'player' , frames: this.anims.generateFrameNames ('characters' , {prefix: 'playerWalkRight' ,start: 0,  end: 3 , zeroPad: 2}), repeat: -1});
@@ -124,24 +130,35 @@
 
 
       createPlatforms(this);
-      player = new Player(this, 50, 400, 'characters', 'player', playerAnims);
+      player = new Player(this, 0, 0, 'characters', 'player', playerAnims);
       this.physics.add.collider(player, platforms);
       player.setScale(1.3);
 
 
 
-      tar1 = new Targets(this, 210,465, 210, 290, 'characters', 'target1' , redTargetAnims); //*******
+
+      tar1 = new Targets(this, 700,360, 700, 1100, 'characters', 'target1' , policeAnims); //*******
       tar1.setScale(1.3);
+      arr.push(tar1);
 
 
-      tar2 = new Targets(this, 600,530, 600, 800 , 'characters', 'target2' , greenTargetAnims);
+      tar2 = new Targets(this, 625,245, 600, 800 , 'characters', 'target2' , greenTargetAnims); //**go here
       tar2.setScale(1.3);
-
-      tar3 = new Targets(this, 1000,530, 1000, 1300, 'characters', 'target3' , redTargetAnims); //*******
-      tar3.setScale(1.3);
       arr.push(tar2);
 
-      this.physics.add.overlap(player, targets, eatCarrot, null, this);
+      tar3 = new Targets(this, 1083, 517, 1000, 1300, 'characters', 'target3' , redTargetAnims); //*******
+      tar3.setScale(1.3);
+      arr.push(tar3);
+
+      tar4 = new Targets(this, 1750, 527, 1750, 527, 'characters', 'target4', greenTargetAnims);
+      tar4.setScale(1.3);
+      arr.push(tar4);
+
+      tar5 = new Targets(this, 1650, 203, 1650, 203, 'characters', 'target5', policeAnims);
+      tar5.setScale(1.3);
+      arr.push(tar5);
+
+      this.physics.add.overlap(player, targets, stealthKill, null, this);
 
       cursors = this.input.keyboard.createCursorKeys();
       keys = this.input.keyboard.addKeys('A, D');
@@ -150,7 +167,6 @@
 
       gui = this.add.text(16, 16, '', {fontSize: '32px', fill: '#000'});
 
-arr.push(tar1);
 arr.push(player);
 
    }
@@ -159,13 +175,61 @@ arr.push(player);
    {
    platforms = scene.physics.add.staticGroup();
 
-   let basePlatform = platforms.create(200, 600, 'platform');
-   basePlatform.setScale(6.5, 1).refreshBody();
 
-   let building1=  platforms.create(250,300,'platform');
+/*   let basePlatform = platforms.create(200, 600, 'platform');
+//   this.physics.add.collider(player, basePlatform);
+   basePlatform.setScale(6.5, 1).refreshBody();
+*/
+/*   let building1=  platforms.create(250,300,'platform');
    building1.setScale(.19, 3).refreshBody();
-   let buildingbot1=  platforms.create(250,600,'platform');
-   buildingbot1.setScale(.19, 3).refreshBody();
+//   let buildingbot1=  platforms.create(250,600,'platform');
+//   buildingbot1.setScale(.19, 3).refreshBody();
+*/
+   let buildingOne = platforms.create(0, 425, 'platform');
+//   this.physics.add.collider(player, buildingOne);
+   buildingOne.setScale(.71, 6.2).refreshBody();
+
+   let buildingTwo = platforms.create(545,410, 'platform');
+   buildingTwo.setScale(1.25,.3).refreshBody();
+
+   let buildingTwoSecondLvl = platforms.create(687, 291, 'platform');
+   buildingTwoSecondLvl.setScale(0.32, .3).refreshBody();
+
+   let buildingTwoRoof = platforms.create(765, 185, 'platform');
+   buildingTwoRoof.setScale(.35, .3).refreshBody();
+
+   let buildingTwoLeftWall = platforms.create(595, 239, 'platform');
+   buildingTwoLeftWall.setScale(.050, 1.97).refreshBody();
+
+   let buildingTwoRightWall = platforms.create(840, 292, 'platform');
+   buildingTwoRightWall.setScale(.050, 3.6).refreshBody();
+
+   let buildingThreeBase = platforms.create(1257, 565, 'platform');
+   buildingThreeBase.setScale(.76, .3).refreshBody();
+
+   let buildingThreeRoof = platforms.create(1190, 327, 'platform');
+   buildingThreeRoof.setScale(.5, .35).refreshBody();
+
+   let buildingThreeLeftWall = platforms.create(1058, 460, 'platform');
+   buildingThreeLeftWall.setScale(.050, 4.5).refreshBody();
+
+   let buildingThreeRightWall = platforms.create(1460, 460, 'platform');
+   buildingThreeRightWall.setScale(.050, 4.5).refreshBody();
+
+   let buildingFourBase = platforms.create(1747, 575, 'platform');
+   buildingFourBase.setScale(.75, .3).refreshBody();
+
+   let buildingFourRoof = platforms.create(1667, 260, 'platform');
+   buildingFourRoof.setScale(.27, .4).refreshBody();
+
+   let buildingFourLeftWall = platforms.create(1610, 430, 'platform');
+   buildingFourLeftWall.setScale(0.050, 4.95).refreshBody();
+
+   let buildingFourSecondLvl = platforms.create(1820, 448, 'platform');
+   buildingFourSecondLvl.setScale(0.45, .4).refreshBody();
+
+
+
    }
 
    function update()
@@ -211,68 +275,103 @@ arr.push(player);
        {
          player.disableBody(true, true);
          let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-175,'WWW');
-       document.getElementById('next_level_btn').style.display = "block";
        }
 
-       if(tar1.x>291)
+       if(tar1.x>685)
        {
          tar1.setVelocityX(-100);
          tar1.setFlipX(true);
          vel=-100;
-         tar1.play(tar1.animations['redTargetWalkAnim'], true);
+         tar1.play(tar1.animations['policeWalkAnim'], true);
 
     //     tar1.play(tar1.animations['policeWalkAnim'], true);
 
        }
-       if(tar1.x<211)
+       if(tar1.x<250)
        {
          tar1.setVelocityX(100);
          tar1.setFlipX(false);
          vel=100;
-         tar1.play(tar1.animations['redTargetWalkAnim'], true);
+         tar1.play(tar1.animations['policeWalkAnim'], true);
 
 
     //     tar1.play(tar1.animations['policeWalkAnim'], true);
        }
-       if(tar2.x>801)
+       if(tar2.x>720) //go here
        {
-         tar2.setVelocityX(-100);
+         tar2.setVelocityX(-70);
          tar2.setFlipX(true);
-         vel1=-100;
+         vel1=-70;
          tar2.play(tar2.animations['greenTargetWalkAnim'], true);
     //   tar2.play(tar2.animations['greenTargetWalkAnim'], true);
        }
-       if(tar2.x<601)
+       if(tar2.x<640)
        {
-         tar2.setVelocityX(100);
+         tar2.setVelocityX(70);
          tar2.setFlipX(false);
-         vel1=100;
+         vel1=70;
          tar2.play(tar2.animations['greenTargetWalkAnim'], true);
          //tar2.play(tar2.animations['greenTargetWalkAnim'], true);
        }
-       if(tar3.x>1301)
+       if(tar3.x>1425)
        {
          tar3.setVelocityX(-100);
          tar3.setFlipX(true);
          vel2=-100;
-         tar3.play(tar1.animations['redTargetWalkAnim'], true);
-
-    //     tar1.play(tar1.animations['policeWalkAnim'], true);
+         tar3.play(tar3.animations['redTargetWalkAnim'], true);
 
        }
-       if(tar3.x<1001)
+       if(tar3.x<1085)
        {
          tar3.setVelocityX(100);
          tar3.setFlipX(false);
          vel2=100;
-         tar3.play(tar1.animations['redTargetWalkAnim'], true);
+         tar3.play(tar3.animations['redTargetWalkAnim'], true);
 
-
-    //     tar1.play(tar1.animations['policeWalkAnim'], true);
        }
-       this.physics.add.overlap(player, tar1, eatCarrot, null, this);
-       this.physics.add.overlap(player, tar2, eatCarrot1, null, this);
-       this.physics.add.overlap(player, tar3, eatCarrot2, null, this);
+
+       if(tar4.x<1770)
+       {
+         tar4.setVelocityX(70);
+         tar4.setFlipX(false);
+         vel2=70;
+         tar4.play(tar4.animations['greenTargetWalkAnim'], true);
+
+       }
+
+       if(tar4.x>1890)
+       {
+         tar4.setVelocityX(-70);
+         tar4.setFlipX(true);
+         vel2=-70;
+         tar4.play(tar4.animations['greenTargetWalkAnim'], true);
+
+       }
+
+       if(tar5.x<1750)
+       {
+         tar5.setVelocityX(70);
+         tar5.setFlipX(false);
+         vel2=70;
+         tar5.play(tar5.animations['policeWalkAnim'], true);
+
+       }
+
+       if(tar5.x>1850)
+       {
+         tar5.setVelocityX(-70);
+         tar5.setFlipX(true);
+         vel2=-70;
+         tar5.play(tar5.animations['policeWalkAnim'], true);
+
+       }
+
+
+       this.physics.add.overlap(player, tar1, stealthKill, null, this);
+       this.physics.add.overlap(player, tar2, stealthKill1, null, this);
+       this.physics.add.overlap(player, tar3, stealthKill2, null, this);
+       this.physics.add.overlap(player, tar4, stealthKill3, null, this);
+       this.physics.add.overlap(player, tar5, stealthKill4, null, this);
 
        // if(dir===0&&vel<0 &&player.x+500<tar1.x)
        //     {
@@ -289,7 +388,6 @@ arr.push(player);
         player.disableBody(true, true);
         let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-230,'LLL');
         let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-215,'PA');
-        document.getElementById('restart_game_btn').style.display = "block";
        }
        }
 
@@ -302,7 +400,7 @@ arr.push(player);
          player.currentJumps++;
    }
    }
-   function eatCarrot()
+   function stealthKill()
  {
    if (dir===0 && player.x>tar1.x && vel>0)
    {
@@ -335,10 +433,11 @@ arr.push(player);
         document.getElementById('restart_game_btn').style.display = "block";
       }
     }
-    function eatCarrot1()
+    function stealthKill1()
   {
     if (dir===0 && player.x>tar2.x && vel1>0)
     {
+      gui.setText('ur ass kid');
     }
      else if(dir===0&&vel1>0)
        {
@@ -347,6 +446,7 @@ arr.push(player);
        }
        if (dir===1 && player.x<tar2.x && vel1<0)
        {
+         gui.setText('ur ass kid');
        }
         else if(dir===1&&vel1<0)
        {
@@ -368,7 +468,7 @@ arr.push(player);
          document.getElementById('restart_game_btn').style.display = "block";
        }
      }
-     function eatCarrot2()
+     function stealthKill2()
    {
      if (dir===0 && player.x>tar3.x && vel2>0)
      {
@@ -392,7 +492,6 @@ arr.push(player);
           let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-230,'LLL');
           let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-215,'PA');
           document.getElementById('restart_game_btn').style.display = "block";
-
         }
         if (dir===1 && vel2>0)
         {
@@ -403,12 +502,80 @@ arr.push(player);
         }
       }
 
+      function stealthKill3()
+    {
+      if (dir===0 && player.x>tar4.x && vel1>0)
+      {
+        gui.setText('ur ass kid');
+      }
+       else if(dir===0&&vel1>0)
+         {
+           tar4.disableBody(true, true);
+        targetcount--;
+         }
+         if (dir===1 && player.x<tar4.x && vel1<0)
+         {
+           gui.setText('ur ass kid');
+         }
+          else if(dir===1&&vel1<0)
+         {
+         tar4.disableBody(true, true);
+      targetcount--;
+         }
+         if(dir===0 &&vel1<0)
+         {
+           player.disableBody(true, true);
+           let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-230,'LLL');
+           let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-215,'PA');
+           document.getElementById('restart_game_btn').style.display = "block";
+         }
+         if (dir===1 && vel1>0)
+         {
+           player.disableBody(true, true);
+           let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-230,'LLL');
+           let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-215,'PA');
+           document.getElementById('restart_game_btn').style.display = "block";
+         }
+       }
+
+       function stealthKill4()
+     {
+       if (dir===0 && player.x>tar5.x && vel1>0)
+       {
+         gui.setText('ur ass kid');
+       }
+        else if(dir===0&&vel1>0)
+          {
+            tar5.disableBody(true, true);
+         targetcount--;
+          }
+          if (dir===1 && player.x<tar5.x && vel1<0)
+          {
+            gui.setText('ur ass kid');
+          }
+           else if(dir===1&&vel1<0)
+          {
+          tar5.disableBody(true, true);
+       targetcount--;
+          }
+          if(dir===0 &&vel1<0)
+          {
+            player.disableBody(true, true);
+            let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-230,'LLL');
+            let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-215,'PA');
+            document.getElementById('restart_game_btn').style.display = "block";
+          }
+          if (dir===1 && vel1>0)
+          {
+            player.disableBody(true, true);
+            let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-230,'LLL');
+            let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-215,'PA');
+            document.getElementById('restart_game_btn').style.display = "block";
+          }
+        }
+
       function i_die() {
         window.location.reload();
-      }
-      function newlevel()
-      {
-        platforms.clear(true);
       }
              //  if(dir===0&&vel>0)
              //  {
@@ -425,7 +592,6 @@ arr.push(player);
  </script>
 
  <button id = "restart_game_btn" onclick = "i_die()" style="position: absolute; left: 40%; top: 70%; font-size: 4vw; display: none">RESTART!</button>
- <button id = "next_level_btn" onclick = "newlevel()" style="position: absolute; left: 40%; top: 70%; font-size: 4vw; display: none">NEXT LEVEL!</button>
 
 </body>
 </html>
