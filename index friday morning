@@ -607,6 +607,7 @@ arr.push(player);
 
  </script>
 
+<h1 style = "position: absolute; text-align:center; margin: auto; left: 0; right: 0">KILL EVERYONE!</h1>
  <button id = "restart_game_btn" onclick = "i_die()" style="position: absolute; left: 40%; top: 70%; font-size: 4vw; display: none">RESTART!</button>
 
 </body>
