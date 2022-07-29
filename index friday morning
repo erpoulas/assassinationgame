@@ -30,6 +30,8 @@
     var vel=100;
     var vel1 = 100;
     var vel2=100;
+    var vel3=100;
+    var vel4=100;
     var cursors;
     var keys;
     var space;
@@ -190,7 +192,7 @@ arr.push(player);
    buildingOne.setScale(.71, 6.2).refreshBody();
 
    let buildingTwo = platforms.create(545,410, 'platform');
-   buildingTwo.setScale(1.25,.3).refreshBody();
+   buildingTwo.setScale(1.23,.3).refreshBody();
 
    let buildingTwoSecondLvl = platforms.create(670, 291, 'platform');
    buildingTwoSecondLvl.setScale(0.3, .3).refreshBody();
@@ -207,17 +209,18 @@ arr.push(player);
    let buildingThreeBase = platforms.create(1257, 565, 'platform');
    buildingThreeBase.setScale(.76, .3).refreshBody();
 
-   let buildingThreeRoof = platforms.create(1190, 327, 'platform');
-   buildingThreeRoof.setScale(.5, .35).refreshBody();
+
+   let buildingThreeRoof = platforms.create(1150, 327, 'platform');
+   buildingThreeRoof.setScale(.3, .35).refreshBody();
+
+   let buildingThreeRoofP2 = platforms.create(1415, 327, 'platform');
+   buildingThreeRoofP2.setScale(.2, .35).refreshBody();
 
    let buildingThreeLeftWall = platforms.create(1058, 460, 'platform');
    buildingThreeLeftWall.setScale(.050, 4.5).refreshBody();
 
    let buildingThreeRightWall = platforms.create(1460, 460, 'platform');
    buildingThreeRightWall.setScale(.050, 4.5).refreshBody();
-
-   let buildingThreeSecondLvl = platforms.create(1370, 460, 'platform');
-   buildingThreeSecondLvl.setScale(.35, .5);
 
    let buildingFourBase = platforms.create(1767, 575, 'platform');
    buildingFourBase.setScale(.65, .3).refreshBody();
@@ -340,7 +343,7 @@ arr.push(player);
        {
          tar4.setVelocityX(70);
          tar4.setFlipX(false);
-         vel2=70;
+         vel3=70;
          tar4.play(tar4.animations['greenTargetWalkAnim'], true);
 
        }
@@ -349,25 +352,25 @@ arr.push(player);
        {
          tar4.setVelocityX(-70);
          tar4.setFlipX(true);
-         vel2=-70;
+         vel3=-70;
          tar4.play(tar4.animations['greenTargetWalkAnim'], true);
 
        }
 
-       if(tar5.x<1670)
+       if(tar5.x<1655)
        {
          tar5.setVelocityX(70);
          tar5.setFlipX(false);
-         vel2=70;
+         vel4=70;
          tar5.play(tar5.animations['policeWalkAnim'], true);
 
        }
 
-       if(tar5.x>1800)
+       if(tar5.x>1762)
        {
          tar5.setVelocityX(-70);
          tar5.setFlipX(true);
-         vel2=-70;
+         vel4=-70;
          tar5.play(tar5.animations['policeWalkAnim'], true);
 
        }
@@ -392,8 +395,9 @@ arr.push(player);
        if (player.y>565.5)
        {
         player.disableBody(true, true);
-        let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-230,'LLL');
-        let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-215,'PA');
+        let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-250,'LLL');
+        let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-225,'PA');
+        document.getElementById('restart_game_btn').style.display = "block";
        }
        }
 
@@ -401,11 +405,17 @@ arr.push(player);
 
    function jump(event)
    {
-       if (player.body.touching.down) {
-         player.setVelocityY(-1100);
+       if (player.body.touching.down)
+        {
+         player.setVelocityY(-1200);
          player.currentJumps++;
-   }
-   }
+
+       }else if(player.currentJumps < player.totalJumps){
+           player.setVelocity(-1000);
+           player.currentJumps++;
+
+         }
+    }
    function stealthKill()
  {
    if (dir===0 && player.x>tar1.x && vel>0)
@@ -427,15 +437,15 @@ arr.push(player);
       if(dir===0 &&vel<0)
       {
         player.disableBody(true, true);
-        let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-230,'LLL');
-        let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-215,'PA');
+        let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-250,'LLL');
+        let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-225,'PA');
         document.getElementById('restart_game_btn').style.display = "block";
       }
       if (dir===1 && vel>0)
       {
         player.disableBody(true, true);
-        let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-230,'LLL');
-        let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-215,'PA');
+        let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-250,'LLL');
+        let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-225,'PA');
         document.getElementById('restart_game_btn').style.display = "block";
       }
     }
@@ -462,15 +472,15 @@ arr.push(player);
        if(dir===0 &&vel1<0)
        {
          player.disableBody(true, true);
-         let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-230,'LLL');
-         let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-215,'PA');
+         let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-250,'LLL');
+         let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-225,'PA');
          document.getElementById('restart_game_btn').style.display = "block";
        }
        if (dir===1 && vel1>0)
        {
          player.disableBody(true, true);
-         let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-230,'LLL');
-         let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-215,'PA');
+         let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-250,'LLL');
+         let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-225,'PA');
          document.getElementById('restart_game_btn').style.display = "block";
        }
      }
@@ -495,87 +505,87 @@ arr.push(player);
         if(dir===0 &&vel2<0)
         {
           player.disableBody(true, true);
-          let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-230,'LLL');
-          let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-215,'PA');
+          let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-250,'LLL');
+          let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-225,'PA');
           document.getElementById('restart_game_btn').style.display = "block";
         }
         if (dir===1 && vel2>0)
         {
           player.disableBody(true, true);
-          let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-230,'LLL');
-          let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-215,'PA');
+          let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-250,'LLL');
+          let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-225,'PA');
           document.getElementById('restart_game_btn').style.display = "block";
         }
       }
 
       function stealthKill3()
     {
-      if (dir===0 && player.x>tar4.x && vel1>0)
+      if (dir===0 && player.x>tar4.x && vel3>0)
       {
         gui.setText('ur ass kid');
       }
-       else if(dir===0&&vel1>0)
+       else if(dir===0&&vel3>0)
          {
            tar4.disableBody(true, true);
         targetcount--;
          }
-         if (dir===1 && player.x<tar4.x && vel1<0)
+         if (dir===1 && player.x<tar4.x && vel3<0)
          {
            gui.setText('ur ass kid');
          }
-          else if(dir===1&&vel1<0)
+          else if(dir===1&&vel3<0)
          {
          tar4.disableBody(true, true);
       targetcount--;
          }
-         if(dir===0 &&vel1<0)
+         if(dir===0 &&vel3<0)
          {
            player.disableBody(true, true);
-           let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-230,'LLL');
-           let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-215,'PA');
+           let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-250,'LLL');
+           let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-225,'PA');
            document.getElementById('restart_game_btn').style.display = "block";
          }
-         if (dir===1 && vel1>0)
+         if (dir===1 && vel3>0)
          {
            player.disableBody(true, true);
-           let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-230,'LLL');
-           let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-215,'PA');
+           let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-250,'LLL');
+           let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-225,'PA');
            document.getElementById('restart_game_btn').style.display = "block";
          }
        }
 
        function stealthKill4()
      {
-       if (dir===0 && player.x>tar5.x && vel1>0)
+       if (dir===0 && player.x>tar5.x && vel4>0)
        {
          gui.setText('ur ass kid');
        }
-        else if(dir===0&&vel1>0)
+        else if(dir===0&&vel4>0)
           {
             tar5.disableBody(true, true);
          targetcount--;
           }
-          if (dir===1 && player.x<tar5.x && vel1<0)
+          if (dir===1 && player.x<tar5.x && vel4<0)
           {
             gui.setText('ur ass kid');
           }
-           else if(dir===1&&vel1<0)
+           else if(dir===1&&vel4<0)
           {
           tar5.disableBody(true, true);
        targetcount--;
           }
-          if(dir===0 &&vel1<0)
+          if(dir===0 &&vel4<0)
           {
             player.disableBody(true, true);
-            let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-230,'LLL');
-            let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-215,'PA');
+            let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-250,'LLL');
+            let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-225,'PA');
             document.getElementById('restart_game_btn').style.display = "block";
           }
-          if (dir===1 && vel1>0)
+          if (dir===1 && vel3>0)
           {
             player.disableBody(true, true);
-            let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-230,'LLL');
-            let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-215,'PA');
+            let hello= this.add.sprite((screen.width/2)+300, (screen.height/2)-250,'LLL');
+            let hello1= this.add.sprite((screen.width/2)+300, (screen.height/2)-225,'PA');
             document.getElementById('restart_game_btn').style.display = "block";
           }
         }
